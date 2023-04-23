@@ -3,12 +3,11 @@ import config from "config";
 
 export const signJwt = (
 	payload: Object,
-	keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey",
+	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_TOKEN_PRIVATE_KEY",
 	options: SignOptions,
 ) => {
-	// jwt.sign() methods only takes ascii as the private key thats what this line of code is doing
 	const privateKey = Buffer.from(
-		config.get<string>(keyName),
+		process.env[keyName], // access the environment variable here
 		"base64",
 	).toString("ascii");
 	return sign(payload, privateKey, {
