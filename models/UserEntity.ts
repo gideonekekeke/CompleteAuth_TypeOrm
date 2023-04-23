@@ -1,5 +1,6 @@
-import { Column, Entity, Index } from "typeorm";
+import { BeforeInsert, Column, Entity, Index } from "typeorm";
 import Model from "./model.entity";
+import bcrypt from "bcrypt";
 
 export enum RoleEnumType {
 	USER = "user",
@@ -37,6 +38,21 @@ export class User extends Model {
 		default: false,
 	})
 	verified: boolean;
+
+	// hash password
+	@BeforeInsert()
+	async hashPassword() {
+		this.password = await bcrypt.hash(this.password, 12);
+	}
+
+	//validate password | comparing the password
+
+	static async comparePasswords(
+		candidatePassword: string,
+		hashedPassword: string,
+	) {
+		return await bcrypt.compare(candidatePassword, hashedPassword);
+	}
 
 	// toJson(){
 	// // return {...this, password : undefined, verified : undefined}
