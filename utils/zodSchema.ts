@@ -21,6 +21,24 @@ export const RegisterUserSchema = object({
 		role: optional(nativeEnum(RoleEnumType)),
 	}).refine((data) => data.password === data.passwordConfirm, {
 		path: ["passwordConfirm"],
-		message: "Password do not match",
+		message: "Password",
 	}),
 });
+
+export const LoginUserSchema = object({
+	body: object({
+		emai: string({
+			required_error: "Email is required",
+		}).email("invalid email address"),
+		password: string({
+			required_error: "Password is required",
+		}).min(8, "Password must be more that 8 characters"),
+	}),
+});
+
+export type RegisterUserInput = Omit<
+	TypeOf<typeof RegisterUserSchema>["body"],
+	"passwordConfirm"
+>;
+
+export type LoginUserInput = TypeOf<typeof LoginUserSchema>["body"];
