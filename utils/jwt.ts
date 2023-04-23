@@ -1,31 +1,23 @@
-import { SignOptions, sign, verify, decode } from "jsonwebtoken";
-import config from "config";
+import { SignOptions, sign, verify } from "jsonwebtoken";
+
 
 export const signJwt = (
 	payload: Object,
-	keyName: "ACCESS_TOKEN_PRIVATE_KEY" | "REFRESH_TOKEN_PRIVATE_KEY",
+	keyName: string,
 	options: SignOptions,
 ) => {
-	const privateKey = Buffer.from(
-		process.env[keyName], // access the environment variable here
-		"base64",
-	).toString("ascii");
-	return sign(payload, privateKey, {
+	return sign(payload, keyName, {
 		...(options && options),
-		algorithm: "RS256",
 	});
 };
 
-export const verifyJwt = <T>(
-	token: string,
-	keyName: "accessTokenPublicKey" | "refreshTokenPublicKey",
-): T | null => {
+export const verifyJwt = <T>(token: string, keyName: string): T | null => {
 	try {
-		const publicKey = Buffer.from(
-			config.get<string>(keyName),
-			"base64",
-		).toString("ascii");
-		const decoded = verify(token, publicKey) as T;
+		// const publicKey = Buffer.from(
+		// config.get<string>(keyName),
+		// "base64",
+		// ).toString("ascii");
+		const decoded = verify(token, keyName) as T;
 
 		return decoded;
 	} catch (error) {

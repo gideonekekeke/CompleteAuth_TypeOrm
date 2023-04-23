@@ -7,15 +7,19 @@ export const SignTokens = async (user: User) => {
 		{
 			sub: user.id,
 		},
-		"ACCESS_TOKEN_PRIVATE_KEY",
+		process.env.ACCESS_TOKEN_PRIVATE_KEY,
 		{
 			expiresIn: `30m`,
 		},
 	);
 
-	const refresh_token = signJwt({ sub: user.id }, "REFRESH_TOKEN_PRIVATE_KEY", {
-		expiresIn: `10m`,
-	});
+	const refresh_token = signJwt(
+		{ sub: user.id },
+		process.env.REFRESH_TOKEN_PRIVATE_KEY,
+		{
+			expiresIn: `10m`,
+		},
+	);
 
 	return { access_token, refresh_token };
 };

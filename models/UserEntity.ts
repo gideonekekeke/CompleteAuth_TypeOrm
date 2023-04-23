@@ -22,6 +22,11 @@ export class User extends Model {
 	password: string;
 
 	@Column({
+		nullable: true,
+	})
+	sessionID: string;
+
+	@Column({
 		type: "enum",
 		enum: RoleEnumType,
 		default: RoleEnumType.USER,
@@ -53,8 +58,8 @@ export class User extends Model {
 	) {
 		return await bcrypt.compare(candidatePassword, hashedPassword);
 	}
-
-	// toJson(){
-	// // return {...this, password : undefined, verified : undefined}
-	// }
+	//
+	toJson() {
+		return { ...this, password: undefined, verified: undefined };
+	}
 }

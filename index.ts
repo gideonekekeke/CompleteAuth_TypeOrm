@@ -1,8 +1,10 @@
 import express from "express";
-const port = 6000;
+import { middleware } from "./middleware";
+const port = 6637;
 import { dbConfig } from "./utils/database";
 
 const app = express();
+middleware(app);
 
 dbConfig
 	.initialize()

@@ -27,7 +27,7 @@ export const RegisterUserSchema = object({
 
 export const LoginUserSchema = object({
 	body: object({
-		emai: string({
+		email: string({
 			required_error: "Email is required",
 		}).email("invalid email address"),
 		password: string({
