@@ -89,11 +89,6 @@ export const loginUserHandler = async (
 };
 
 //refresh token
-// ? Cookie Options Here
-
-// ? Register User Controller
-
-// ? Login User Controller
 
 export const refreshAccessTokenHandler = async (
 	req: Request,
