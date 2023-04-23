@@ -9,7 +9,7 @@ export const SignTokens = async (user: User) => {
 		},
 		process.env.ACCESS_TOKEN_PRIVATE_KEY,
 		{
-			expiresIn: `30m`,
+			expiresIn: `10m`,
 		},
 	);
 
@@ -17,7 +17,7 @@ export const SignTokens = async (user: User) => {
 		{ sub: user.id },
 		process.env.REFRESH_TOKEN_PRIVATE_KEY,
 		{
-			expiresIn: `10m`,
+			expiresIn: `60m`,
 		},
 	);
 
