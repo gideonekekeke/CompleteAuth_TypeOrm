@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
-
+import { User } from "../models/UserEntity";
 
 dotenv.config();
 
@@ -13,5 +13,5 @@ export const dbConfig = new DataSource({
 	database: process.env.POSTGRES_DATABASE,
 	synchronize: true,
 	logging: false,
-	entities: [],
+	entities: [User],
 });

@@ -16,3 +16,15 @@ dbConfig
 const server = app.listen(port, () => {
 	console.log("listening on port");
 });
+
+process.on("uncaughtException", () => {
+	console.log("server uncaught exception");
+	process.exit(1);
+});
+
+process.on("unhandledRejection", (res: any) => {
+	console.log(res);
+	server.close(() => {
+		process.exit(1);
+	});
+});
