@@ -17,7 +17,7 @@ export const SignTokens = async (user: User) => {
 		{ sub: user.id },
 		process.env.REFRESH_TOKEN_PRIVATE_KEY,
 		{
-			expiresIn: `60m`,
+			expiresIn: `1y`,
 		},
 	);
 

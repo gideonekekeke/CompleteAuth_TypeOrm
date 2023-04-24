@@ -10,8 +10,9 @@ import morgan from "morgan";
 export const middleware = (app: Application) => {
 	// ROUTES
 	app
-		.use(cors())
+		.use(cors({ credentials: true, origin: "http://localhost:3001" }))
 		.use(express.json())
+		.use(cookieParser())
 		.use("/api/auth", auth)
 		.use("/api/users", user);
 
@@ -21,7 +22,6 @@ export const middleware = (app: Application) => {
 			.use(morgan("dev"))
 
 			// 3. Cookie Parser
-			.use(cookieParser())
 
 			// UNHANDLED ROUTE
 

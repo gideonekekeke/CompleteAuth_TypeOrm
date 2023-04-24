@@ -63,7 +63,7 @@ export const loginUserHandler = async (
 		}
 
 		// creating a session id for the user
-		await User.update(user.id, {
+		const resSession = await User.update(user.id, {
 			sessionID: generateRandomId(),
 		});
 
@@ -82,6 +82,7 @@ export const loginUserHandler = async (
 		res.status(200).json({
 			status: "success",
 			access_token,
+			refresh_token,
 		});
 	} catch (error) {
 		next(error);
@@ -97,6 +98,7 @@ export const refreshAccessTokenHandler = async (
 ) => {
 	try {
 		const refresh_token = req.cookies.refresh_token;
+		console.log(refresh_token);
 		const { sessionID } = req.body;
 
 		const message = "Could not refresh access token";
